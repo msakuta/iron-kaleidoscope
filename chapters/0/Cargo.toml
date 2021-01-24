@@ -3,9 +3,12 @@
 name = "iron_kaleidoscope"
 version = "0.0.1"
 authors = ["Jauhien Piatlicki <jauhien@gentoo.org>"]
+edition = "2018"
 
 [dependencies]
-docopt = "0.6"
-regex = "*"
-regex_macros = "*"
-rustc-serialize = "0.3"
+docopt = "1.1.0"
+regex = "1.4.3"
+# regex_macros = "*"
+rustc-serialize = "0.3.24"
+quote = "1.0.0"
+structopt = { version = "0.3", default-features = false }

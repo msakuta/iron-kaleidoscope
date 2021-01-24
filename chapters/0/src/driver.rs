@@ -1,6 +1,6 @@
 use std::io;
 use std::io::Write;
-use lexer::*;
+use crate::lexer::*;
 pub use self::Stage::{
     Tokens
 };

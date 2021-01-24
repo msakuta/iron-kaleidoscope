@@ -3,6 +3,8 @@ extern crate docopt;
 
 extern crate iron_kaleidoscope;
 
+use structopt::StructOpt;
+
 use iron_kaleidoscope::driver::{main_loop,
                                 Tokens
 };
@@ -18,17 +20,19 @@ Options:
     -i  Run only IR builder and show its output.
 ";
 
-#[derive(Debug, RustcDecodable)]
+#[derive(Debug, StructOpt)]
+#[structopt(name = "Args")]
 struct Args {
+    #[structopt(short = "l", long)]
     flag_l: bool,
+    #[structopt(short = "p", long)]
     flag_p: bool,
-    flag_i: bool
+    #[structopt(short = "i", long)]
+    flag_i: bool,
 }
 
 fn main() {
-    let args: Args = Docopt::new(USAGE)
-        .and_then(|d| d.decode())
-        .unwrap_or_else(|e| e.exit());
+    let args: Args = Args::from_args();
 
     if args.flag_p || args.flag_i {
         unimplemented!();
