@@ -1,15 +1,7 @@
 use regex::Regex;
 
 pub use self::Token::{
-    Def,
-    Extern,
-    Delimiter,
-    OpeningParenthesis,
-    ClosingParenthesis,
-    Comma,
-    Ident,
-    Number,
-    Operator
+    ClosingParenthesis, Comma, Def, Delimiter, Extern, Ident, Number, OpeningParenthesis, Operator,
 };
 
 #[derive(PartialEq, Clone, Debug)]
@@ -22,7 +14,7 @@ pub enum Token {
     Comma,
     Ident(String),
     Number(f64),
-    Operator(String)
+    Operator(String),
 }
 
 pub fn tokenize(input: &str) -> Vec<Token> {
@@ -42,19 +34,21 @@ pub fn tokenize(input: &str) -> Vec<Token> {
         r"(?P<oppar>\()|",
         r"(?P<clpar>\))|",
         r"(?P<comma>,)|",
-        r"(?P<operator>\S)")).unwrap();
+        r"(?P<operator>\S)"
+    ))
+    .unwrap();
 
     for cap in token_re.captures_iter(&preprocessed) {
         let token = if let Some(name) = cap.name("ident") {
             match name.as_str() {
                 "def" => Def,
                 "extern" => Extern,
-                ident => Ident(ident.to_string())
+                ident => Ident(ident.to_string()),
             }
         } else if let Some(number) = cap.name("number") {
             match number.as_str().parse() {
                 Ok(number) => Number(number),
-                Err(_) => panic!("Lexer failed trying to parse number")
+                Err(_) => panic!("Lexer failed trying to parse number"),
             }
         } else if cap.name("delimiter").is_some() {
             Delimiter

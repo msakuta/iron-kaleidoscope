@@ -1,13 +1,11 @@
+pub use self::Stage::Tokens;
+use crate::lexer::*;
 use std::io;
 use std::io::Write;
-use crate::lexer::*;
-pub use self::Stage::{
-    Tokens
-};
 
 #[derive(PartialEq, Clone, Debug)]
 pub enum Stage {
-    Tokens
+    Tokens,
 }
 
 pub fn main_loop(stage: Stage) {
@@ -19,7 +17,10 @@ pub fn main_loop(stage: Stage) {
         print!("> ");
         stdout.flush().unwrap();
         input.clear();
-        stdin.read_line(&mut input).ok().expect("Failed to read line");
+        stdin
+            .read_line(&mut input)
+            .ok()
+            .expect("Failed to read line");
         if input.as_str() == ".quit\n" {
             break;
         }
@@ -28,7 +29,7 @@ pub fn main_loop(stage: Stage) {
             let tokens = tokenize(input.as_str());
             if stage == Tokens {
                 println!("{:?}", tokens);
-                continue 'main
+                continue 'main;
             }
         }
     }
