@@ -1,17 +1,14 @@
-use std::io;
-use std::io::Write;
 use crate::lexer::*;
 use crate::parser::*;
+use std::io;
+use std::io::Write;
 
-pub use self::Stage::{
-    AST,
-    Tokens
-};
+pub use self::Stage::{Tokens, AST};
 
 #[derive(PartialEq, Clone, Debug)]
 pub enum Stage {
     AST,
-    Tokens
+    Tokens,
 }
 
 pub fn main_loop(stage: Stage) {
@@ -24,7 +21,10 @@ pub fn main_loop(stage: Stage) {
         print!("> ");
         stdout.flush().unwrap();
         input.clear();
-        stdin.read_line(&mut input).ok().expect("Failed to read line");
+        stdin
+            .read_line(&mut input)
+            .ok()
+            .expect("Failed to read line");
         if input.as_str() == ".quit\n" {
             break;
         }
@@ -37,7 +37,7 @@ pub fn main_loop(stage: Stage) {
             let tokens = tokenize(input.as_str());
             if stage == Tokens {
                 println!("{:?}", tokens);
-                continue 'main
+                continue 'main;
             }
             prev.extend(tokens.into_iter());
 
@@ -47,25 +47,28 @@ pub fn main_loop(stage: Stage) {
                     ast.extend(parsed_ast.into_iter());
                     if rest.is_empty() {
                         // we have parsed a full expression
-                        break
+                        break;
                     } else {
                         prev = rest;
                     }
-                },
+                }
                 Err(message) => {
                     println!("Error occured: {}", message);
-                    continue 'main
+                    continue 'main;
                 }
             }
             print!(". ");
             stdout.flush().unwrap();
             input.clear();
-            stdin.read_line(&mut input).ok().expect("Failed to read line");
+            stdin
+                .read_line(&mut input)
+                .ok()
+                .expect("Failed to read line");
         }
 
         if stage == AST {
             println!("{:?}", ast);
-            continue
+            continue;
         }
     }
 }

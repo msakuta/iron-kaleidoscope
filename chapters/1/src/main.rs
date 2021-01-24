@@ -1,13 +1,9 @@
-use crate::driver::{main_loop,
-                                AST,
-                                Tokens
-};
+use crate::driver::{main_loop, Tokens, AST};
 use structopt::StructOpt;
 
 mod driver;
 mod lexer;
 mod parser;
-
 
 #[derive(Debug, StructOpt)]
 #[structopt(name = "Args")]
