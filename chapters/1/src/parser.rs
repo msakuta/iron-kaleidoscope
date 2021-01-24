@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use lexer::*;
+use crate::lexer::*;
 
 pub use self::ASTNode::{
     ExternNode,
@@ -316,7 +316,7 @@ fn parse_binary_expr(tokens : &mut Vec<Token>, settings : &mut ParserSettings, e
         }
 
         // merge LHS and RHS
-        result = BinaryExpr(operator, box result, box rhs);
+        result = BinaryExpr(operator, Box::new(result), Box::new(rhs));
     }
 
     Good(result, parsed_tokens)

@@ -1,7 +1,7 @@
 use std::io;
 use std::io::Write;
-use lexer::*;
-use parser::*;
+use crate::lexer::*;
+use crate::parser::*;
 
 pub use self::Stage::{
     AST,
