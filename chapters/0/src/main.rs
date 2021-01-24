@@ -1,32 +1,22 @@
-extern crate rustc_serialize;
-extern crate docopt;
-
-extern crate iron_kaleidoscope;
+mod driver;
+mod lexer;
 
 use structopt::StructOpt;
 
-use iron_kaleidoscope::driver::{main_loop,
-                                Tokens
-};
-
-use docopt::Docopt;
-
-const USAGE: &'static str = "
-Usage: iron_kaleidoscope [(-l | -p | -i)]
-
-Options:
-    -l  Run only lexer and show its output.
-    -p  Run only parser and show its output.
-    -i  Run only IR builder and show its output.
-";
+use crate::driver::{main_loop, Tokens};
 
 #[derive(Debug, StructOpt)]
 #[structopt(name = "Args")]
 struct Args {
+    /// Run only lexer and show its output
     #[structopt(short = "l", long)]
     flag_l: bool,
+
+    /// Run only parser and show its output.
     #[structopt(short = "p", long)]
     flag_p: bool,
+
+    /// Run only IR builder and show its output.
     #[structopt(short = "i", long)]
     flag_i: bool,
 }
